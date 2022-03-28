@@ -36,6 +36,9 @@ export class CityEditComponent
   // the countries array for the select
   countries: Country[];
 
+  // Activity Log (for debugging purposes)
+  activityLog: string = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -48,16 +51,33 @@ export class CityEditComponent
       name: new FormControl('', Validators.required),
       lat: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[-]?[0-9]+(\.[0-9]{1,4})?$/)
+        Validators.pattern(/^[-]?(\d{1,3})(\.[0-9]{1,4})?$/)
       ]),
       lon: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[-]?[0-9]+(\.[0-9]{1,4})?$/)
+        Validators.pattern(/^[-]?(\d{1,3})(\.[0-9]{1,4})?$/)
       ]),
       countryId: new FormControl('', Validators.required)
     }, null, this.isDupeCity());
 
+    // react to form changes
+    this.form.valueChanges
+      .subscribe(() => {
+        if (!this.form.dirty) {
+          this.log("Form Model has been loaded.")
+        }
+        else {
+          this.log("Form Model was updated by the user.")
+        }
+      });
+
     this.loadData();
+  }
+
+  log(str: string) {
+    this.activityLog += "["
+      + new Date().toLocaleString()
+      + "] " + str + "<br />";
   }
 
   loadData() {

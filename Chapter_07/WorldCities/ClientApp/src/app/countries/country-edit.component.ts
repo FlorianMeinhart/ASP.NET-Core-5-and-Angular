@@ -31,6 +31,10 @@ export class CountryEditComponent
   // and not NULL when we're editing an existing one.
   id?: number;
 
+  // Activity Log (for debugging purposes)
+  activityLog: string[] = [];
+
+
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -61,7 +65,25 @@ export class CountryEditComponent
       ]
     });
 
+    // react to form changes
+    this.form.valueChanges
+      .subscribe(() => {
+        if (!this.form.dirty) {
+          this.log("Form Model has been loaded.")
+        }
+        else {
+          this.log("Form Model was updated by the user.")
+        }
+      });
+
     this.loadData();
+  }
+
+  log(str: string) {
+    this.activityLog.push("["
+      + new Date().toLocaleString()
+      + "] " + str);
+
   }
 
   loadData() {

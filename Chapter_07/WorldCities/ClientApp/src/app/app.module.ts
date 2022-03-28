@@ -15,6 +15,7 @@ import { CountryEditComponent } from './countries/country-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OrderByPipe } from './shared/OrderByPipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CitiesComponent,
     CityEditComponent,
     CountriesComponent,
-    CountryEditComponent
+    CountryEditComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
